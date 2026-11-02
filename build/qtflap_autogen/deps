@@ -5,6 +5,8 @@ qtflap_autogen/timestamp: \
 	/home/lemion/Documents/Qt-flap/src/bird.cpp \
 	/home/lemion/Documents/Qt-flap/src/bird.h \
 	/home/lemion/Documents/Qt-flap/src/main.cpp \
+	/home/lemion/Documents/Qt-flap/src/pipe.cpp \
+	/home/lemion/Documents/Qt-flap/src/pipe.h \
 	/home/lemion/Documents/Qt-flap/src/resources.qrc \
 	/usr/lib/cmake/Qt6/FindWrapAtomic.cmake \
 	/usr/lib/cmake/Qt6/FindWrapOpenGL.cmake \

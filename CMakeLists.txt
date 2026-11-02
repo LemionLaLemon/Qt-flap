@@ -30,6 +30,7 @@ qt_standard_project_setup()
 add_executable(qtflap
     src/main.cpp
     src/bird.cpp
+    src/pipe.cpp
     src/resources.qrc
 )
 

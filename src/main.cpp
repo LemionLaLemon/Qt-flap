@@ -14,6 +14,10 @@
 #include <QStyleHints>
 #include <QFile>
 #include <qnamespace.h>
+#include <QRandomGenerator>
+#include "pipe.h"
+#include <QList>
+#include <qrandom.h>
 
 constexpr std::string windowTitle = "Qt-flap";
 
@@ -21,7 +25,7 @@ class Game : public QWidget {
     public:
         explicit Game(QStatusBar *status) : status(status){
             setFocusPolicy(Qt::StrongFocus);
-            setStyleSheet("background-color: #ffffff");
+            setStyleSheet("Game {background-color: #ffffff;}");
             bird = new Bird(this);
             clock.start();
 
@@ -33,7 +37,8 @@ class Game : public QWidget {
                 }
 
                 bird->step(dt);
-                if (bird->onGround()){
+                updatePipes(dt);
+                if (bird->onGround() || hitPipe()){
                     die();
                 }
             });
@@ -45,6 +50,10 @@ class Game : public QWidget {
             t->start(16);
         }
         void restart(){
+            qDeleteAll(pipes);
+            pipes.clear();
+            spawnIn = 1.0;
+            score = 0;
             dead = false;
             bird->reset();
             clock.restart();
@@ -69,10 +78,52 @@ class Game : public QWidget {
         bool dead = false;
         QElapsedTimer clock;
 
+        QList<Pipe*> pipes;
+        int score = 0;
+        qreal spawnIn = 1.0;
+
+        static constexpr qreal pipeSpeed = 180;
+        static constexpr qreal spawnInterval = 1.6;
+
         void die(){
             dead = true;
-            status->showMessage(QStringLiteral("Press flap to space again"));
+            status->showMessage(QStringLiteral("Score: %1, Press flap to space again").arg(score));
         }
+
+        void updatePipes(qreal dt){
+            spawnIn -= dt;
+            if (spawnIn <= 0){
+                spawnIn = spawnInterval;
+                const int margin = 50;
+                const int gapTop = QRandomGenerator::global()->bounded(margin, qMax(margin + 1, height() - Pipe::gap - margin));
+                pipes.append(new Pipe(this, width(), gapTop));
+                bird->raise();
+            }
+            
+            const int birdLeft = bird->hitbox().left();
+            for (Pipe *p : pipes){
+                p->advance(pipeSpeed * dt, height());
+                if (!p->scored && p->right() < birdLeft){
+                    p->scored = true;
+                    ++score;
+                    status->showMessage(QStringLiteral("Score: %1").arg(score));
+                }
+            }
+            while (!pipes.isEmpty() && pipes.first()->offscreen()){
+                delete pipes.takeFirst();
+            }
+        }
+
+        bool hitPipe() const{
+            const QRect hb = bird->hitbox().adjusted(4, 4, -4, -4);
+            for (Pipe *p : pipes){
+                if (p->hits(hb)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 };
 
 int main(int argc, char *argv[])

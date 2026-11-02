@@ -547,6 +547,12 @@
 			"MU",
 			"UVLADIE3JM/moc_bird.cpp",
 			null
+		],
+		[
+			"/home/lemion/Documents/Qt-flap/src/pipe.h",
+			"MU",
+			"UVLADIE3JM/moc_pipe.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -608,7 +614,8 @@
 	"SOURCES" : 
 	[
 		[ "/home/lemion/Documents/Qt-flap/src/bird.cpp", "MU", null ],
-		[ "/home/lemion/Documents/Qt-flap/src/main.cpp", "MU", null ]
+		[ "/home/lemion/Documents/Qt-flap/src/main.cpp", "MU", null ],
+		[ "/home/lemion/Documents/Qt-flap/src/pipe.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],

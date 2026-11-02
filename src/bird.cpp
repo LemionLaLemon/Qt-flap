@@ -36,6 +36,7 @@ QRect Bird::hitbox() const {
 
 Bird::Bird(QWidget *parent) : QWidget(parent){
     resize(boxSize, boxSize);
+    setStyleSheet("background: #00000000;");
 
     QWidget *s = new QWidget(this);
     s->setObjectName("sprite");

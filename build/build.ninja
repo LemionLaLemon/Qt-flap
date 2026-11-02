@@ -79,6 +79,16 @@ build CMakeFiles/qtflap.dir/src/bird.cpp.o: CXX_COMPILER__qtflap_unscanned_Debug
   OBJECT_FILE_DIR = CMakeFiles/qtflap.dir/src
   TARGET_SUPPORT_DIR = CMakeFiles/qtflap.dir
 
+build CMakeFiles/qtflap.dir/src/pipe.cpp.o: CXX_COMPILER__qtflap_unscanned_Debug /home/lemion/Documents/Qt-flap/src/pipe.cpp || cmake_object_order_depends_target_qtflap
+  CONFIG = Debug
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/qtflap.dir/src/pipe.cpp.o.d
+  FLAGS = -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access
+  INCLUDES = -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/qtflap.dir
+  OBJECT_FILE_DIR = CMakeFiles/qtflap.dir/src
+  TARGET_SUPPORT_DIR = CMakeFiles/qtflap.dir
+
 build CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o: CXX_COMPILER__qtflap_unscanned_Debug /home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp || cmake_object_order_depends_target_qtflap
   CONFIG = Debug
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -97,7 +107,7 @@ build CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o: CXX_C
 #############################################
 # Link the executable qtflap
 
-build qtflap: CXX_EXECUTABLE_LINKER__qtflap_Debug CMakeFiles/qtflap.dir/qtflap_autogen/mocs_compilation.cpp.o CMakeFiles/qtflap.dir/src/main.cpp.o CMakeFiles/qtflap.dir/src/bird.cpp.o CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o | /usr/lib/libQt6Widgets.so.6.12.0 /usr/lib/libQt6Gui.so.6.12.0 /usr/lib/libGLX.so /usr/lib/libOpenGL.so /usr/lib/libQt6Core.so.6.12.0 || qtflap_autogen qtflap_autogen_timestamp_deps
+build qtflap: CXX_EXECUTABLE_LINKER__qtflap_Debug CMakeFiles/qtflap.dir/qtflap_autogen/mocs_compilation.cpp.o CMakeFiles/qtflap.dir/src/main.cpp.o CMakeFiles/qtflap.dir/src/bird.cpp.o CMakeFiles/qtflap.dir/src/pipe.cpp.o CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o | /usr/lib/libQt6Widgets.so.6.12.0 /usr/lib/libQt6Gui.so.6.12.0 /usr/lib/libGLX.so /usr/lib/libOpenGL.so /usr/lib/libQt6Core.so.6.12.0 || qtflap_autogen qtflap_autogen_timestamp_deps
   CONFIG = Debug
   DEP_FILE = CMakeFiles/qtflap.dir/link.d
   FLAGS = -g

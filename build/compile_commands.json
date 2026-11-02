@@ -19,6 +19,12 @@
 },
 {
   "directory": "/home/lemion/Documents/Qt-flap/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/src/pipe.cpp.o -c /home/lemion/Documents/Qt-flap/src/pipe.cpp",
+  "file": "/home/lemion/Documents/Qt-flap/src/pipe.cpp",
+  "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/src/pipe.cpp.o"
+},
+{
+  "directory": "/home/lemion/Documents/Qt-flap/build",
   "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o -c /home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp",
   "file": "/home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp",
   "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o"
