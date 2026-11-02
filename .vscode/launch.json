@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug qtflap",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/qtflap",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "cmake: build",
+            "terminal": "integrated",
+            "stopOnEntry": false
+        }
+    ]
+}

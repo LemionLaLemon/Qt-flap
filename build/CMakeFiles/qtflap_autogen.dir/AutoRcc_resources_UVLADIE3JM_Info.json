@@ -1,0 +1,22 @@
+{
+	"BUILD_DIR" : "/home/lemion/Documents/Qt-flap/build/qtflap_autogen",
+	"CMAKE_BINARY_DIR" : "/home/lemion/Documents/Qt-flap/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/lemion/Documents/Qt-flap/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/lemion/Documents/Qt-flap",
+	"CMAKE_SOURCE_DIR" : "/home/lemion/Documents/Qt-flap",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include",
+	"INPUTS" : [ "/home/lemion/Documents/Qt-flap/src/style.qss" ],
+	"LOCK_FILE" : "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap_autogen.dir/AutoRcc_resources_UVLADIE3JM_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "UVLADIE3JM",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt6/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap_autogen.dir/AutoRcc_resources_UVLADIE3JM_Used.txt",
+	"SOURCE" : "/home/lemion/Documents/Qt-flap/src/resources.qrc",
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

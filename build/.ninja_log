@@ -1,0 +1,12 @@
+# ninja log v7
+6	42	1793643480267946505	qtflap_autogen/timestamp	a051d46240ca3afb
+6	42	1793643480267946505	qtflap_autogen/mocs_compilation.cpp	a051d46240ca3afb
+6	42	1793643480267946505	/home/lemion/Documents/Qt-flap/build/qtflap_autogen/timestamp	a051d46240ca3afb
+6	42	1793643480267946505	/home/lemion/Documents/Qt-flap/build/qtflap_autogen/mocs_compilation.cpp	a051d46240ca3afb
+336	348	1793556264097377208	CMakeFiles/qtflap.dir/qtflap_autogen/mocs_compilation.cpp.o	839018093ada4488
+43	3460	1793643480304958052	CMakeFiles/qtflap.dir/src/main.cpp.o	45b08a4e55657ac1
+3460	4034	1793643483721958251	qtflap	994b04973ea1d874
+43	3295	1793643480305395405	CMakeFiles/qtflap.dir/src/bird.cpp.o	6402ffd760eca2ab
+3	24	1793641574280483354	qtflap_autogen/UVLADIE3JM/qrc_resources.cpp	67f1dda7eddae7fd
+3	24	1793641574280483354	/home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp	67f1dda7eddae7fd
+24	46	1793641574283483364	CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o	3f86c183f08690d0

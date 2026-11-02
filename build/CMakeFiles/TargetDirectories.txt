@@ -1,0 +1,9 @@
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/edit_cache.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/rebuild_cache.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/list_install_components.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/install.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/install/local.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/install/strip.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap_autogen_timestamp_deps.dir
+/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap_autogen.dir

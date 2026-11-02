@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/lemion/Documents/Qt-flap/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/qtflap_autogen/mocs_compilation.cpp.o -c /home/lemion/Documents/Qt-flap/build/qtflap_autogen/mocs_compilation.cpp",
+  "file": "/home/lemion/Documents/Qt-flap/build/qtflap_autogen/mocs_compilation.cpp",
+  "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/qtflap_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/lemion/Documents/Qt-flap/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/src/main.cpp.o -c /home/lemion/Documents/Qt-flap/src/main.cpp",
+  "file": "/home/lemion/Documents/Qt-flap/src/main.cpp",
+  "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/lemion/Documents/Qt-flap/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/src/bird.cpp.o -c /home/lemion/Documents/Qt-flap/src/bird.cpp",
+  "file": "/home/lemion/Documents/Qt-flap/src/bird.cpp",
+  "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/src/bird.cpp.o"
+},
+{
+  "directory": "/home/lemion/Documents/Qt-flap/build",
+  "command": "/usr/sbin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/lemion/Documents/Qt-flap/build/qtflap_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui -g -std=c++20 -Wall -Wextra -Wpedantic -mno-direct-extern-access -o CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o -c /home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp",
+  "file": "/home/lemion/Documents/Qt-flap/build/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp",
+  "output": "/home/lemion/Documents/Qt-flap/build/CMakeFiles/qtflap.dir/qtflap_autogen/UVLADIE3JM/qrc_resources.cpp.o"
+}
+]
