@@ -21,6 +21,10 @@ class Pipe{
         qreal right() const;
         bool hits(const QRect &r) const;
         bool scored = false;
+
+        qreal left() const;
+        int gapTopY() const;
+        int gapBottomY() const;
     private:
         void sync(int parentH);
 

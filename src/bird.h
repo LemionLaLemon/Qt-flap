@@ -12,6 +12,13 @@ class Bird : public QWidget {
         QRect hitbox() const;
         void reset();
 
+        bool alive = true;
+        void kill();
+
+        qreal velocity() const;
+        qreal age = 0;
+        int pipesPassed = 0;
+
         bool onGround() const;
     protected:
         void paintEvent(QPaintEvent*) override;

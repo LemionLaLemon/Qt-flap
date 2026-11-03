@@ -12,6 +12,15 @@
 #include <QPainter>
 #include <qradiobutton.h>
 
+void Bird::kill(){
+    alive = false;
+    hide();
+}
+
+qreal Bird::velocity() const{
+    return vy;
+}
+
 qreal Bird::floorY() const{
     return parentWidget()->height() - boxSize + (boxSize - 40) / 2.0;
 }
@@ -21,11 +30,15 @@ qreal Bird::ceilingY() const{
 }
 
 void Bird::reset(){
+    alive = true;
     y = initialBirdY;
     vy = 0;
     angle = 0;
     move(140, int(y));
     update();
+    show();
+    age = 0;
+    pipesPassed = 0;
 }
 
 QRect Bird::hitbox() const {

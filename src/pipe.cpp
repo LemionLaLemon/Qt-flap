@@ -47,6 +47,18 @@ qreal Pipe::right() const {
     return x + width;
 }
 
+qreal Pipe::left() const{
+    return x;
+}
+
+int Pipe::gapTopY() const {
+    return gapTop;
+}
+
+int Pipe::gapBottomY() const {
+    return gapTop + gap;
+}
+
 bool Pipe::hits(const QRect &r) const {
     return top->geometry().intersects(r) || bottom->geometry().intersects(r);
 }

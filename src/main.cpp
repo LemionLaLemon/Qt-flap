@@ -18,35 +18,37 @@
 #include "pipe.h"
 #include <QList>
 #include <qrandom.h>
+#include "api.h"
 
 constexpr std::string windowTitle = "Qt-flap";
 
 class Game : public QWidget {
     public:
-        explicit Game(QStatusBar *status) : status(status){
+        explicit Game(QStatusBar *status, int birdCount = 1) : status(status){
             setFocusPolicy(Qt::StrongFocus);
             setStyleSheet("Game {background-color: #ffffff;}");
-            bird = new Bird(this);
+            
+            for (int i = 0; i < birdCount; i++){
+                birds.append(new Bird(this));
+            }
+            aliveCount = birdCount;
+
             clock.start();
 
             auto *t = new QTimer(this);
             connect(t, &QTimer::timeout, this, [this]{
-                qreal dt = clock.restart() / 1000.0;
-                if (dead) {
+                qreal dt = qMin(clock.restart() / 1000.0, 0.05);
+                if (dead){
                     return;
                 }
 
-                bird->step(dt);
-                updatePipes(dt);
-                if (bird->onGround() || hitPipe()){
-                    die();
+                acc += dt * speed;
+                for (int i = 0; acc >= fixedDt && i < 2000 && !dead; i++){
+                    acc -= fixedDt;
+                    simStep(fixedDt);
                 }
             });
-            // for (QWidget *pipe : pipes){
-            //     if (bird->hitbox().intersects(pipe->geometry())){
-            //         //bird kaputs
-            //     }
-            // }
+            t->setTimerType(Qt::PreciseTimer);
             t->start(16);
         }
         void restart(){
@@ -55,25 +57,80 @@ class Game : public QWidget {
             spawnIn = 1.0;
             score = 0;
             dead = false;
-            bird->reset();
+            for (Bird *b : birds){
+                b->reset();
+            }
+            aliveCount = birds.size();
+            acc = 0;
             clock.restart();
             status->showMessage(QStringLiteral("Press space to flap"));
             setFocus();
         }
-    protected:
-        void keyPressEvent(QKeyEvent *e) override{
-            if (dead){
-                if (e->key() == Qt::Key_Space){
-                    restart();
-                    return;
+        void simStep(qreal dt){
+            if (hooks.brain){
+                for (int i = 0; i < birds.size(); i++){
+                    Bird *b = birds[i];
+                    if (b->alive && hooks.brain(i, observe(b))){
+                        b->flap();
+                    }
                 }
             }
-            if (e->key() == Qt::Key_Space){
-                bird->flap();
+
+            for (Bird *b : birds){
+                if (b->alive){
+                    b->step(dt);
+                    b->age += dt;
+                }
+            }
+            
+            updatePipes(dt);
+
+            for (Bird *b : birds){
+                if (b->alive && (b->onGround() || hitPipe(b))){
+                    b->pipesPassed = score;
+                   b->kill();
+                   --aliveCount; 
+                }
+            }
+            if (aliveCount == 0){
+                die();
+            }
+        }
+        void setHooks(flap::Hooks h){
+            hooks = std::move(h);
+        }
+        void setSpeed(int s){
+            speed = qBound(1, s, 64);
+        }
+        void setSeed(quint32 s){
+            rng.seed(s);
+        }
+    protected:
+        void keyPressEvent(QKeyEvent *e) override{
+            switch (e->key()){
+                case Qt::Key_Space:
+                    if (dead){
+                        restart();
+                    }
+                    else {
+                        for (Bird *b : birds) {
+                            if (b->alive){
+                                b->flap();
+                            }
+                        }
+                    }
+                    break;
+                case Qt::Key_Plus: case Qt::Key_Equal:
+                    speed = qMin(speed * 2, 64);
+                    break;
+                case Qt::Key_Minus:
+                    speed = qMax(speed / 2, 1);
+                    break;
             }
         }
     private:
-        Bird *bird;
+        QList<Bird*> birds;
+        int aliveCount = 0;
         QStatusBar *status;
         bool dead = false;
         QElapsedTimer clock;
@@ -82,25 +139,55 @@ class Game : public QWidget {
         int score = 0;
         qreal spawnIn = 1.0;
 
+        flap::Hooks hooks;
+        QRandomGenerator rng = QRandomGenerator::securelySeeded();
+
         static constexpr qreal pipeSpeed = 180;
         static constexpr qreal spawnInterval = 1.6;
+
+        static constexpr qreal fixedDt = 1.0 / 60;
+        qreal acc = 0;
+        int speed = 1;
+
+        int lastGapTop = -1;
+        static constexpr int maxGapShift = 150;
 
         void die(){
             dead = true;
             status->showMessage(QStringLiteral("Score: %1, Press flap to space again").arg(score));
+        
+            if (hooks.onGameOver){
+                std::vector<flap::BirdResult> results;
+                for (int i=0; i<birds.size(); i++){
+                    results.push_back({i, birds[i]->age, birds[i]->pipesPassed});
+                }
+                hooks.onGameOver(results);
+            }
+            if (hooks.autoRestart){
+                restart();
+            }
         }
 
         void updatePipes(qreal dt){
             spawnIn -= dt;
             if (spawnIn <= 0){
-                spawnIn = spawnInterval;
+                spawnIn = spawnInterval * (0.8 + QRandomGenerator::global()->generateDouble());
                 const int margin = 50;
-                const int gapTop = QRandomGenerator::global()->bounded(margin, qMax(margin + 1, height() - Pipe::gap - margin));
+                int lo = margin;
+                int hi = qMax(margin + 1, height() - Pipe::gap - margin);
+                if (lastGapTop >= 0){
+                    lo = qMax(lo, lastGapTop - maxGapShift);
+                    hi = qMin(hi, lastGapTop + maxGapShift + 1);
+                }
+                const int gapTop = QRandomGenerator::global()->bounded(lo, qMax(lo + 1, hi));
+                lastGapTop = gapTop;
                 pipes.append(new Pipe(this, width(), gapTop));
-                bird->raise();
+                for (Bird *b : birds){
+                    b->raise();
+                }
             }
             
-            const int birdLeft = bird->hitbox().left();
+            const int birdLeft = birds.first()->hitbox().left();
             for (Pipe *p : pipes){
                 p->advance(pipeSpeed * dt, height());
                 if (!p->scored && p->right() < birdLeft){
@@ -114,14 +201,38 @@ class Game : public QWidget {
             }
         }
 
-        bool hitPipe() const{
-            const QRect hb = bird->hitbox().adjusted(4, 4, -4, -4);
+        bool hitPipe(const Bird *b) const{
+            const QRect hb = b->hitbox().adjusted(4, 4, -4, -4);
             for (Pipe *p : pipes){
                 if (p->hits(hb)) {
                     return true;
                 }
             }
             return false;
+        }
+        flap::Observation observe(const Bird *b) const{
+            flap::Observation o;
+            const QRect hb = b->hitbox();
+            o.worldWidth = width();
+            o.worldHeight = height();
+            o.birdY = hb.center().y();
+            o.birdVy = b->velocity();
+            o.gapTop = height() / 2.0 - Pipe::gap / 2.0;
+            o.gapBottom = o.gapTop + Pipe::gap;
+            o.dxLeft = width();
+            o.dxRight = width();
+
+            for (Pipe *p : pipes){
+                if (p->right() > hb.left()){
+                    o.pipeAhead = true;
+                    o.dxLeft = p->left() - hb.right();
+                    o.dxRight = p->right() - hb.left();
+                    o.gapTop = p->gapTopY();
+                    o.gapBottom = p->gapBottomY();
+                    break;
+                }
+            }
+            return o;
         }
 
 };
@@ -152,8 +263,9 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
     window.setWindowTitle(QString::fromUtf8(windowTitle));
+    window.setFixedSize(800, 600);
 
-    Game *game = new Game(window.statusBar());
+    Game *game = new Game(window.statusBar(), 1);
     window.setCentralWidget(game);
 
     QMenu *fileMenu = window.menuBar()->addMenu(QStringLiteral("&File"));
@@ -163,6 +275,22 @@ int main(int argc, char *argv[])
 
     window.show();
     game->setFocus();
+
+    //temporary vibecoded bot
+    flap::Hooks h;
+    h.autoRestart = true;
+    h.brain = [](int, const flap::Observation &o){
+        return o.birdY > o.gapBottom - 24;
+    };
+    h.onGameOver = [](const std::vector<flap::BirdResult> &r){
+        qreal best = 0;
+        for (const auto &b : r){
+            best = qMax(best, b.age);
+        }
+        qDebug() << "best survived" << best << "s";
+    };
+    game->setHooks(h);
+    game->setSpeed(8);
 
     return app.exec();
 }
