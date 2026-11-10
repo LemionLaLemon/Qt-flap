@@ -97,6 +97,10 @@ class Game : public QWidget {
             if (aliveCount == 0){
                 die();
             }
+
+            if (score >= 4000){
+                die(); //bird died of old age
+            }
         }
         void setHooks(flap::Hooks h){
             hooks = std::move(h);
@@ -312,10 +316,35 @@ int main(int argc, char *argv[])
     };
     h.onGameOver = [&birdBrain](const std::vector<flap::BirdResult> &r){
         qreal best = 0;
+        int bestBird = 0;
         for (const auto &b : r){
-            best = qMax(best, b.age);
+            if (b.age <= best){
+                continue;
+            }
+            best = b.age;
+            bestBird = b.index;
+        }
+        for (int i = 0; i < BIRD_COUNT; i++){
+            if (i == bestBird){
+                continue;
+            }
+            if (i < 45){
+                for (int j = 0; j < 5; j++){
+                    birdBrain[i].hidden[j] = birdBrain[bestBird].hidden[j] + randomFloat(-0.3, 0.3); //lobotomy
+                }
+            }
+            else {
+                for (int j = 0; j < 5; j++){
+                    birdBrain[i].hidden[j] = randomFloat(-2,  2); //dementia
+                }
+            }
         }
         qDebug() << "best survived" << best << "s";
+        QString w;
+        for (int j = 0; j < 5; j++){
+            w += QString::number(birdBrain[bestBird].hidden[j], 'f', 2) + " ";
+        }
+        qDebug() << "weights: " << w;
     };
     game->setHooks(h);
     game->setSpeed(8);
