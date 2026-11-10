@@ -27,7 +27,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets)
 
 qt_standard_project_setup()
 
-add_executable(qtflap
+qt_add_executable(qtflap
     src/main.cpp
     src/bird.cpp
     src/pipe.cpp
@@ -40,5 +40,7 @@ target_compile_options(qtflap PRIVATE -Wall -Wextra -Wpedantic)
 
 install(TARGETS qtflap RUNTIME DESTINATION bin)
 
-# macOS: build a proper .app so macdeployqt can bundle Qt.
-set_target_properties(qtflap PROPERTIES MACOSX_BUNDLE ON)
+if(APPLE)
+    # Provides __isPlatformVersionAtLeast when cross-compiling without Darwin compiler-rt.
+    target_sources(qtflap PRIVATE src/macosAvailability.cpp)
+endif()
