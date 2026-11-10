@@ -8,6 +8,8 @@
 #include "bird.h"
 #include <QMenuBar>
 #include <QMenu>
+#include <array>
+#include <cstdlib>
 #include <qcoreapplication.h>
 #include <QStatusBar>
 #include <QStyle>
@@ -171,7 +173,7 @@ class Game : public QWidget {
         void updatePipes(qreal dt){
             spawnIn -= dt;
             if (spawnIn <= 0){
-                spawnIn = spawnInterval * (0.8 + QRandomGenerator::global()->generateDouble());
+                spawnIn = spawnInterval * (0.9 + QRandomGenerator::global()->generateDouble() * 0.4);
                 const int margin = 50;
                 int lo = margin;
                 int hi = qMax(margin + 1, height() - Pipe::gap - margin);
@@ -237,6 +239,12 @@ class Game : public QWidget {
 
 };
 
+float randomFloat(float min, float max){
+    return ((max - min) * ((float)rand() / RAND_MAX)) + min;
+}
+
+static constexpr int BIRD_COUNT = 50;
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -265,7 +273,7 @@ int main(int argc, char *argv[])
     window.setWindowTitle(QString::fromUtf8(windowTitle));
     window.setFixedSize(800, 600);
 
-    Game *game = new Game(window.statusBar(), 1);
+    Game *game = new Game(window.statusBar(), BIRD_COUNT);
     window.setCentralWidget(game);
 
     QMenu *fileMenu = window.menuBar()->addMenu(QStringLiteral("&File"));
@@ -276,13 +284,33 @@ int main(int argc, char *argv[])
     window.show();
     game->setFocus();
 
-    //temporary vibecoded bot
     flap::Hooks h;
     h.autoRestart = true;
-    h.brain = [](int, const flap::Observation &o){
-        return o.birdY > o.gapBottom - 24;
+
+    struct genome {
+        float hidden[6];
     };
-    h.onGameOver = [](const std::vector<flap::BirdResult> &r){
+
+    genome birdBrain[BIRD_COUNT]; // https://www.youtube.com/watch?v=0iVlSNpq8i8
+
+    for (int i = 0; i < BIRD_COUNT; i++){
+        for (int j = 0; j < 6; j++){
+            birdBrain[i].hidden[j] = randomFloat(-2, 2);
+        }
+    }
+
+    h.brain = [&birdBrain](int bird, const flap::Observation &o){
+        const std::array<float, 4> input = inputs(o);
+
+        float sum = birdBrain[bird].hidden[4];
+        
+        for (int i = 0; i < 4; i++){
+            sum += input[i] * birdBrain[bird].hidden[i];
+        }
+
+        return sum > 0.0f;
+    };
+    h.onGameOver = [&birdBrain](const std::vector<flap::BirdResult> &r){
         qreal best = 0;
         for (const auto &b : r){
             best = qMax(best, b.age);
