@@ -39,3 +39,6 @@ target_link_libraries(qtflap PRIVATE Qt6::Widgets)
 target_compile_options(qtflap PRIVATE -Wall -Wextra -Wpedantic)
 
 install(TARGETS qtflap RUNTIME DESTINATION bin)
+
+# macOS: build a proper .app so macdeployqt can bundle Qt.
+set_target_properties(qtflap PROPERTIES MACOSX_BUNDLE ON)
